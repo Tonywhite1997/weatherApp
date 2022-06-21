@@ -1,0 +1,56 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+}
+
+body{
+    height: 100vh;
+    width: 100vw;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 16px;
+    background: linear-gradient(to bottom, rgba(2,0,36,.8) 0%, rgba(9,9,121,1) 35%, rgba(0,212,255,1) 100%);
+}
+
+.main{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.main h1{
+    text-align: center;
+    margin-top: 2em;
+    margin-bottom: 2em;
+}
+
+.main p{
+    text-align: center;
+    margin-bottom: 1em;
+}
+
+.temp{
+    position: relative;
+    cursor: pointer;
+}
+
+.main__region{
+    font-size: 1.3rem;
+}
+
+.main__temperature{
+    font-size: 1.3rem;
+}
+
+span{
+    position: absolute;
+    color: red;
+    top: -5px;
+    right: -15px;
+}
+
+.main__weather__description{
+    font-size: 1.2rem;
+}
