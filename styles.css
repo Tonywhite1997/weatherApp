@@ -22,8 +22,22 @@ body{
 
 .main h1{
     text-align: center;
-    margin-top: 2em;
-    margin-bottom: 2em;
+    margin-top: 1em;
+    margin-bottom: .5em;
+}
+
+input{
+    width: 70%;
+    height: 40px;
+    margin-bottom: .5em;
+    padding-left: 1em;
+    font-size: 1.2rem;
+}
+
+
+.date{
+    margin-bottom: 1em;
+    margin-top: 1em;
 }
 
 .main p{
@@ -53,4 +67,11 @@ span{
 
 .main__weather__description{
     font-size: 1.2rem;
+}
+
+button{
+    padding: .2em .5em;
+    margin-bottom: .5em;
+    font-size: 1.2rem;
+    font-weight: bold;
 }
