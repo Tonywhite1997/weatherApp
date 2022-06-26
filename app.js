@@ -105,6 +105,7 @@ searchButton.addEventListener("click", ()=>{
     currentDate.innerText = "";
     degree.innerText = ""
     getOtherPosition()
+    location.reload()
 })
 
 currentLocationBtn.addEventListener("click", ()=>{
@@ -115,4 +116,38 @@ currentLocationBtn.addEventListener("click", ()=>{
     else{
         console.log("Navigator not supported in browser.");
     }
+
+    location.reload()
 })
+
+
+async function windowLoadData(){
+    let newCoordinates = JSON.parse(localStorage.getItem("coordinates"))
+
+    try{
+        let res = await axios.get("https://api.openweathermap.org/data/2.5/onecall?", {
+        params:{
+            lat: newCoordinates.latitude,
+            lon: newCoordinates.longitude,
+            appid: "9a4f4bb3e9b9706556c90de2a41fb2db"
+        }
+    })
+
+    let weatherData = res.data
+    toggleDegree(weatherData)
+
+    let weatherDate = new Date(weatherData.current.dt * 1000).toLocaleString("en-US", {timeZone: weatherData.timezone});
+    country.innerText = weatherData.timezone
+    let tempIndegree = Math.floor(weatherData.daily[0].temp.day + (-273.15))
+    temperature.innerText = tempIndegree
+    degree.innerText = "C"
+    description.innerText = weatherData.daily[0].weather[0].description
+    currentDate.innerText = weatherDate;
+
+    }
+    catch(err){
+        errorText.innerText = `${err}. Try again`;
+    }
+}
+
+window.addEventListener("load", windowLoadData)
