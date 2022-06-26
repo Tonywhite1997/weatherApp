@@ -27,7 +27,7 @@ async function getYourPosition(position){
     localStorage.setItem("coordinates", JSON.stringify(coordinates))
     let myCoordinates = JSON.parse(localStorage.getItem("coordinates"))
 
-    let res = await axios.get("http://api.openweathermap.org/data/2.5/onecall?", {
+    let res = await axios.get("https://api.openweathermap.org/data/2.5/onecall?", {
         params:{
             lat: myCoordinates.latitude,
             lon: myCoordinates.longitude,
@@ -36,8 +36,9 @@ async function getYourPosition(position){
     })
     
     let weatherData = res.data
+    toggleDegree(weatherData)
 
-    let weatherDate = new Date(weatherData.current.dt * 1000).toLocaleString();
+    let weatherDate = new Date(weatherData.current.dt * 1000).toLocaleString("en-US", {timeZone: weatherData.timezone});
     country.innerText = weatherData.timezone
     let tempIndegree = Math.floor(weatherData.daily[0].temp.day + (-273.15))
     temperature.innerText = tempIndegree
@@ -45,7 +46,6 @@ async function getYourPosition(position){
     description.innerText = weatherData.daily[0].weather[0].description
     currentDate.innerText = weatherDate;
 
-    toggleDegree(weatherData)
 }
 
 async function getOtherPosition(){
@@ -57,7 +57,7 @@ async function getOtherPosition(){
     let newCoordinates = JSON.parse(localStorage.getItem("coordinates"))
 
     try{
-        let res = await axios.get("http://api.openweathermap.org/data/2.5/onecall?", {
+        let res = await axios.get("https://api.openweathermap.org/data/2.5/onecall?", {
         params:{
             lat: newCoordinates.latitude,
             lon: newCoordinates.longitude,
@@ -66,8 +66,9 @@ async function getOtherPosition(){
     })
 
     let weatherData = res.data
+    toggleDegree(weatherData)
 
-    let weatherDate = new Date(weatherData.current.dt * 1000).toLocaleString();
+    let weatherDate = new Date(weatherData.current.dt * 1000).toLocaleString("en-US", {timeZone: weatherData.timezone});
     country.innerText = weatherData.timezone
     let tempIndegree = Math.floor(weatherData.daily[0].temp.day + (-273.15))
     temperature.innerText = tempIndegree
@@ -75,7 +76,6 @@ async function getOtherPosition(){
     description.innerText = weatherData.daily[0].weather[0].description
     currentDate.innerText = weatherDate;
 
-    toggleDegree(weatherData)
     }
     catch(err){
         errorText.innerText = `${err.response.status}:  ${err.response.data.message.toUpperCase()}. Try again`;
@@ -84,7 +84,7 @@ async function getOtherPosition(){
 
 function toggleDegree(data){
     changeDegree.addEventListener("click", ()=>{
-        let tempIndegree = Math.floor(data.main.temp + (-273.15))
+        let tempIndegree = Math.floor(data.daily[0].temp.day + (-273.15))
 
         if(degree.innerText === "C"){
             temperature.innerText = tempIndegree * 9/5 + 32
